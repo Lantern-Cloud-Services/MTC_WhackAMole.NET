@@ -56,10 +56,14 @@ steps:
       curl -d "{\"State\": 2, \"Message\": \"Initializing Helm...\", \"ServiceName\": \"$(service_name)\"}" -X POST $(report_url)
       #helm init --client-only
 
+      echo 'cmd: curl -d "{\"State\": 2, \"Message\": \"Packaging Helm Chart...\", \"ServiceName\": \"$(service_name)\"}" -X POST $(report_url)'
       curl -d "{\"State\": 2, \"Message\": \"Packaging Helm Chart...\", \"ServiceName\": \"$(service_name)\"}" -X POST $(report_url)
+      echo 'cmd: helm package charts/mole-cloud --version $(Build.BuildNumber)'
       helm package charts/mole-cloud --version $(Build.BuildNumber)
 
+      echo 'cmd: curl -d "{\"State\": 2, \"Message\": \"Pushing Helm chart to Azure Container Registry...\", \"ServiceName\": \"$(service_name)\"}" -X POST $(report_url)'
       curl -d "{\"State\": 2, \"Message\": \"Pushing Helm chart to Azure Container Registry...\", \"ServiceName\": \"$(service_name)\"}" -X POST $(report_url)
+      echo 'cmd: az acr helm push -n $(acr_name) mole-cloud-$(Build.BuildNumber).tgz'
       az acr helm push -n $(acr_name) mole-cloud-$(Build.BuildNumber).tgz
 
 - script: |
