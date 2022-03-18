@@ -52,8 +52,9 @@ steps:
     scriptLocation: inlineScript
     inlineScript: |      
       # Package the helm chart and push it to ACR
+      echo 'cmd: curl -d "{\"State\": 2, \"Message\": \"Initializing Helm...\", \"ServiceName\": \"$(service_name)\"}" -X POST $(report_url)'
       curl -d "{\"State\": 2, \"Message\": \"Initializing Helm...\", \"ServiceName\": \"$(service_name)\"}" -X POST $(report_url)
-      helm init --client-only
+      #helm init --client-only
 
       curl -d "{\"State\": 2, \"Message\": \"Packaging Helm Chart...\", \"ServiceName\": \"$(service_name)\"}" -X POST $(report_url)
       helm package charts/mole-cloud --version $(Build.BuildNumber)
