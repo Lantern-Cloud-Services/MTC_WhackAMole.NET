@@ -1,12 +1,12 @@
 name: $(Date:yyyyMMdd)$(Rev:.r)
 
 pool:
-  vmImage: 'ubuntu-16.04'
+  vmImage: 'ubuntu-18.04'
 
 trigger:
   branches: 
     include:
-      - master
+      #- master
       - feature/terraform
   paths:
     include:
