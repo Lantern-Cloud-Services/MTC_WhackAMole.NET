@@ -18,7 +18,7 @@ steps:
 - script: |
     echo 'cmd: terraform fmt -check=true'
     cd terraform
-#    terraform fmt -check=true
+    terraform fmt -check=true
   displayName: Verify terraform template
 
 #- script: |
